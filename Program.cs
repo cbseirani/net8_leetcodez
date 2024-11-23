@@ -1,10 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using LeetCodeSolutions.Easy;
+﻿using LeetCodeSolutions.Easy;
+using LeetCodeSolutions.Hard;
 
 Console.WriteLine("Leetcode Solutions!");
 
 // 1. Two Sum
 TwoSum.Run();
+
+//2. Add Two Numbers 
+AddTwoNumbers.Run();
 
 Console.WriteLine("Thanks!");
