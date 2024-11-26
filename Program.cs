@@ -1,5 +1,5 @@
 ﻿using LeetCodeSolutions.Easy;
-using LeetCodeSolutions.Hard;
+using LeetCodeSolutions.Medium;
 
 Console.WriteLine("Leetcode Solutions!");
 
@@ -8,5 +8,8 @@ TwoSum.Run();
 
 //2. Add Two Numbers 
 AddTwoNumbers.Run();
+
+//3. Longest Substring Without Repeating Characters
+LongestSubstring.Run();
 
 Console.WriteLine("Thanks!");
