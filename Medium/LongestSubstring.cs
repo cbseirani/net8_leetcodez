@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace LeetCodeSolutions.Medium;
+﻿namespace LeetCodeSolutions.Medium;
 
 /*
  *
