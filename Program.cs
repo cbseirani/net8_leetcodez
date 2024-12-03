@@ -19,4 +19,9 @@ MakeArrayZero.Run();
 // 138. Copy List with Random Pointer
 CopyList.Run();
 
+// 767. Reorganize String
+ReorgString.Run();
+
+
+
 Console.WriteLine("Thanks!");
