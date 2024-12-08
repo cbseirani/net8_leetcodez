@@ -90,6 +90,20 @@ public static class ArraySorts
         }
     }
     
+    /*
+     * Merge sort is a divide-and-conquer algorithm that recursively
+     *  divides the array into smaller subarrays until each subarray
+     *  contains a single element, then merges these subarrays back
+     *  together in sorted order. This merging process ensures that
+     *  the entire array is sorted by combining smaller sorted arrays
+     *  into larger ones.
+     *
+     * Time Complexity :
+     *  Best Case: O(n log n)
+     *  Avg Case: O(n log n)
+     *  Worst Case: O(n log n)
+     */
+    #region MergeSort
     public static void MergeSort(int[] array)
     {
         if (array.Length <= 1)
@@ -134,4 +148,118 @@ public static class ArraySorts
             array[k++] = right[j++];
         }
     }
+    #endregion
+    
+    /*
+     * QuickSort is a highly efficient, divide-and-conquer sorting
+     *  algorithm that works by selecting a "pivot" element from the
+     *  array and partitioning the other elements into two subarrays,
+     *  according to whether they are less than or greater than the
+     *  pivot. The process is recursively applied to the subarrays,
+     *  and this results in the elements being sorted in-place.
+     *
+     * Time Complexity :
+     *  Best Case: O(n log n) - Occurs when the pivot divides the array into
+     *      two nearly equal halves each time.
+     *  Avg Case: O(n log n)
+     *  Worst Case: O(n^2) - Happens when the pivot is the smallest or largest
+     *      element repeatedly, leading to highly unbalanced partitions.
+     */
+    #region QuickSort
+    public static void QuickSort(int[] array, int low, int high)
+    {
+        if (low >= high) 
+            return;
+        
+        var pi = Partition(array, low, high);
+        QuickSort(array, low, pi - 1);
+        QuickSort(array, pi + 1, high);
+    }
+
+    private static int Partition(int[] array, int low, int high)
+    {
+        var pivot = array[high];
+        var i = low - 1;
+        
+        for (var j = low; j < high; j++)
+        {
+            if (array[j] >= pivot) 
+                continue;
+            
+            i++;
+            
+            // Swap array[i] and array[j]
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        
+        // Swap array[i + 1] and array[high]
+        var temp1 = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp1;
+        
+        return i + 1;
+    }
+    #endregion
+
+    /*
+     * Heap Sort is a comparison-based sorting algorithm that builds
+     *  a binary heap from the input data, then repeatedly extracts the
+     *  maximum element from the heap and rebuilds the heap until all
+     *  elements are sorted. This ensures that the largest elements are
+     *  moved to their correct positions in the array from the end
+     *  towards the beginning.
+     *
+     * Time Complexity :
+     *  Best Case: O(n log n)
+     *  Avg Case: O(n log n)
+     *  Worst Case: O(n log n)
+     */
+    #region HeapSort
+    public static void HeapSort(int[] array)
+    {
+        // Build heap
+        for (var i = array.Length / 2 - 1; i >= 0; i--)
+            Heapify(array, array.Length, i);
+
+        // Extract elements from heap one by one
+        for (var i = array.Length - 1; i >= 0; i--)
+        {
+            // Move current root to end
+            int temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+
+            // Call heapify on the reduced heap
+            Heapify(array, i, 0);
+        }
+    }
+
+    private static void Heapify(int[] array, int n, int i)
+    {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && array[left] > array[largest])
+        {
+            largest = left;
+        }
+
+        if (right < n && array[right] > array[largest])
+        {
+            largest = right;
+        }
+
+        if (largest != i)
+        {
+            int swap = array[i];
+            array[i] = array[largest];
+            array[largest] = swap;
+
+            Heapify(array, n, largest);
+        }
+    }
+    #endregion
 }
