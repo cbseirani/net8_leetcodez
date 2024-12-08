@@ -1,4 +1,4 @@
-﻿namespace LeetCodeSolutions.Basics;
+﻿namespace LeetCodeSolutions.Basics.Algorithms;
 
 public static class ArraySorts
 {
@@ -262,4 +262,144 @@ public static class ArraySorts
         }
     }
     #endregion
+    
+    /*
+     * Counting Sort is a non-comparison-based sorting algorithm that
+     *  works by counting the occurrences of each distinct element in
+     *  the input array, then using this count to place the elements
+     *  in their correct positions. It's particularly efficient for
+     *  sorting integers within a limited range.
+     *
+     * Time Complexity :
+     *  Best Case: O(n + k)
+     *  Avg Case: O(n + k)
+     *  Worst Case: O(n log n)
+     * 
+     *      where 𝑛 is the number of elements in the array,
+     *      and 𝑘 is the range of the input values.
+     * 
+     * This makes Counting Sort efficient for scenarios where the
+     *  range 𝑘 is not significantly larger than the number of
+     *  elements 𝑛.
+     */
+    public static void CountingSort(int[] array)
+    {
+        var max = array.Max();
+        var min = array.Min();
+        var range = max - min + 1;
+
+        var count = new int[range];
+        var output = new int[array.Length];
+
+        foreach (var num in array)
+            count[num - min]++;
+
+        for (var i = 1; i < count.Length; i++)
+            count[i] += count[i - 1];
+
+        for (var i = array.Length - 1; i >= 0; i--)
+        {
+            output[count[array[i] - min] - 1] = array[i];
+            count[array[i] - min]--;
+        }
+
+        for (var i = 0; i < array.Length; i++)
+            array[i] = output[i];
+    }
+    
+    /*
+     * Radix Sort is a non-comparison-based sorting algorithm that
+     *  sorts integers by processing individual digits, starting
+     *  from the least significant digit to the most significant digit,
+     *  using a stable subroutine like Counting Sort. This process
+     *  ensures the integers are sorted correctly by repeatedly
+     *  grouping and ordering them based on their digit values.
+     *
+     * Time Complexity :
+     *  Best Case: O(n * k)
+     *  Avg Case: O(n * k)
+     *  Worst Case: O(n * k)
+     *
+     *      where 𝑛 is the number of elements in the array, and
+     *      k is the number of digits in the largest number.
+     *
+     * This makes Radix Sort efficient for sorting large lists of
+     *  integers with a fixed digit length.
+     */
+    #region RadixSort
+    public static void RadixSort(int[] array)
+    {
+        var max = array.Max();
+        
+        for (var exp = 1; max / exp > 0; exp *= 10)
+            CountingSortByDigit(array, exp);
+    }
+
+    private static void CountingSortByDigit(int[] array, int exp)
+    {
+        var n = array.Length;
+        var output = new int[n];
+        var count = new int[10];
+
+        for (var i = 0; i < n; i++)
+            count[(array[i] / exp) % 10]++;
+
+        for (var i = 1; i < 10; i++)
+            count[i] += count[i - 1];
+
+        for (var i = n - 1; i >= 0; i--)
+        {
+            output[count[(array[i] / exp) % 10] - 1] = array[i];
+            count[(array[i] / exp) % 10]--;
+        }
+
+        for (var i = 0; i < n; i++)
+            array[i] = output[i];
+    }
+    #endregion
+    
+    /*
+     * Bucket Sort is a distribution sorting algorithm that divides
+     *  the input array into several buckets, then sorts each bucket
+     *  individually using a sorting algorithm like insertion sort,
+     *  and finally concatenates the sorted buckets to produce the
+     *  sorted array. This approach is especially efficient for
+     *  uniformly distributed data.
+     *
+     * Time Complexity :
+     *  Best Case: O(n + k)
+     *  Avg Case: O(n + k)
+     *  Worst Case: O(n^2) - Occurs when all elements fall into a
+     *      single bucket, causing the need for sorting within that bucket.
+     *
+     *  where 𝑛 is the number of elements in the array, and
+     *  𝑘 is the number of buckets. The overall efficiency depends on
+     *  the distribution of elements across the buckets.
+     */
+    public static void BucketSort(int[] array)
+    {
+        //int n = array.Length;
+        if (array.Length <= 0)
+            return;
+
+        var buckets = new List<int>[array.Length];
+
+        for (var i = 0; i < array.Length; i++)
+            buckets[i] = [];
+
+        foreach (var value in array)
+        {
+            var bucketIndex = value * array.Length;
+            bucketIndex = Math.Min(bucketIndex, array.Length - 1);
+            buckets[bucketIndex].Add(value);
+        }
+
+        for (var i = 0; i < array.Length; i++)
+            buckets[i].Sort();
+
+        var index = 0;
+        for (var i = 0; i < array.Length; i++)
+            foreach (var value in buckets[i])
+                array[index++] = value;
+    }
 }

@@ -1,4 +1,4 @@
-﻿namespace LeetCodeSolutions.Basics;
+﻿namespace LeetCodeSolutions.Basics.Data_Structs;
 
 public class SinglyLinkedListInt
 {
