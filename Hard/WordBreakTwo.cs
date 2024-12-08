@@ -37,11 +37,59 @@ public static class WordBreakTwo
 {
     public static void Run()
     {
+        var result = WordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]);
+        foreach(var res in result)
+            Console.WriteLine($"WordBreakTwo Example1 : {res}");
         
+        result = WordBreak("pineapplepenapple", ["apple","pen","applepen","pine","pineapple"]);
+        foreach(var res in result)
+            Console.WriteLine($"WordBreakTwo Example2 : {res}");
+        
+        result = WordBreak("catsandog", ["cats","dog","sand","and","cat"]);
+        foreach(var res in result)
+            Console.WriteLine($"WordBreakTwo Example3 : {res}");
     }
 
-    private static string[] WordBreak()
+    private static string[] WordBreak(string s, IList<string> wordDict)
     {
-        return new string[1];
+        // Initialize a dictionary for memoization
+        var memo = new Dictionary<string, List<string>>();
+        
+        // Call the helper function
+        return WbHelper(s, new HashSet<string>(wordDict), memo).ToArray();
+    }
+
+    private static List<string> WbHelper(string s, HashSet<string> wordDict, Dictionary<string, List<string>> memo)
+    {
+        // If the result is already computed, return it
+        if (memo.TryGetValue(s, out var value))
+            return value;
+
+        var result = new List<string>();
+
+        // If the string is empty, add an empty string to the result
+        if (s.Length is 0)
+        {
+            result.Add("");
+            return result;
+        }
+
+        // Try every prefix of the string
+        for (var i = 1; i <= s.Length; i++)
+        {
+            var word = s.Substring(0, i);
+
+            if (!wordDict.TryGetValue(word, out var val)) 
+                continue;
+            
+            var subResult = WbHelper(s.Substring(i), wordDict, memo);
+                
+            foreach(var str in subResult)
+                result.Add(word + (str.Length is 0 ? "" : " " + str));
+        }
+
+        // Store the result in the memoization dictionary
+        memo[s] = result;
+        return result;
     }
 }
