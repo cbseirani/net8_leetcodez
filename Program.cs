@@ -22,6 +22,18 @@ foreach(var num in sampleIntData)
 
 singleLinkedList.Display();
 
+// Doubly Linked List
+Console.WriteLine(string.Empty);
+Console.WriteLine("Doubly Linked List");
+var doubleLinkedList = new DoublyLinkedList();
+sampleIntData = new [] { 1, 2, 3, 4, 5 };
+
+foreach(var num in sampleIntData)
+    doubleLinkedList.Insert(num);
+
+doubleLinkedList.ForwardDisplay();
+doubleLinkedList.ReverseDisplay();
+
 // Binary Tree
 Console.WriteLine(string.Empty);
 Console.WriteLine("Binary Search Tree");

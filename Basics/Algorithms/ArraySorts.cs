@@ -9,7 +9,7 @@ public static class ArraySorts
      *  indicating that the list is sorted.
      *
      * Time Complexity :
-     *  Best Case: O(n)  - when list is already sorted
+     *  Best Case: O(n) - when list is already sorted
      *  Avg Case: O(n^2)
      *  Worst Case: O(n^2)
      */

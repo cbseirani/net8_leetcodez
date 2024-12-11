@@ -1,8 +1,13 @@
 ﻿namespace LeetCodeSolutions.Basics.Data_Structs;
 
+/*
+ * A singly linked list is a linear data structure where each
+ *  element (node) contains a value and a reference (link) to the
+ *  next node in the sequence, forming a chain-like collection.
+ */
 public class SinglyLinkedListInt
 {
-    private Node? _head = null;
+    private Node? _head;
 
     public void Insert(int data)
     {
